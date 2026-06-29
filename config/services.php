@@ -34,5 +34,14 @@ return [
             'channel' => env('SLACK_BOT_USER_DEFAULT_CHANNEL'),
         ],
     ],
+    'gemini' => [
+        'api_key' => env('GEMINI_API_KEY'),
+        'api_url' => env('GEMINI_API_URL'),
+    ],
+    'groq' => [
+    'api_key' => env('GROQ_API_KEY'),
+    'api_url' => env('GROQ_API_URL'),
+],
+
 
 ];

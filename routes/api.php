@@ -4,7 +4,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PromptController;
 use App\Http\Controllers\PromptExecutionController;
-use App\Http\Controllers\CategoryController;  // ← ajouter cette ligne
+use App\Http\Controllers\CategoryController;  
+use App\Http\Controllers\AIController;
+use App\Http\Controllers\EmailController;
+use App\Http\Controllers\PDFController;
+
+
+
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -32,4 +38,13 @@ Route::prefix('categories')->group(function () {
 Route::prefix('executions')->group(function () {
     Route::get('/{execution}',          [PromptExecutionController::class, 'show']);
     Route::get('/{execution}/download', [PromptExecutionController::class, 'download']);
+
 });
+
+Route::prefix('ai')->group(function () {
+    Route::post('/executions/{execution}/gemini', [AIController::class, 'askGemini']);
+    Route::post('/executions/{execution}/groq',   [AIController::class, 'askGroq']);
+});
+
+Route::post('/executions/{execution}/send-email', [EmailController::class, 'sendAIResponse']);
+Route::post('/executions/{execution}/generate-pdf', [PDFController::class, 'generatePDF']);
