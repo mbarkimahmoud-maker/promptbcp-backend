@@ -1,0 +1,67 @@
+================================================
+   PROMPT MANAGER BP — NOTICE D'UTILISATION
+================================================
+
+PRÉREQUIS (à installer une seule fois)
+----------------------------------------
+1. Installer Docker Desktop : https://www.docker.com/products/docker-desktop/
+2. Lancer Docker Desktop et attendre qu'il soit complètement démarré
+   (icône stable dans la barre des tâches Windows)
+
+
+CONFIGURATION INITIALE (à faire une seule fois)
+-------------------------------------------------
+1. Copier le fichier ".env.docker.example" et le renommer ".env.docker"
+2. Ouvrir ".env.docker" avec le Bloc-notes
+3. Remplir vos propres clés API (Gemini, Groq) et vos identifiants email
+   selon les instructions écrites dans le fichier
+4. Sauvegarder et fermer
+
+
+DÉMARRER L'APPLICATION
+------------------------
+1. Ouvrir une invite de commandes (cmd) dans le dossier du projet
+2. Copier le fichier .env.docker vers .env :
+   copy .env.docker .env
+
+3. Construire les images (UNIQUEMENT la première fois, peut prendre 10-20 minutes) :
+   docker-compose build
+
+4. Démarrer l'application :
+   docker-compose up
+
+5. Une fois démarré, ouvrir un navigateur et aller sur :
+   http://localhost:5173
+
+6. (Première utilisation uniquement) Dans un NOUVEAU terminal, lancer :
+   docker-compose exec backend php artisan migrate
+
+
+UTILISATION QUOTIDIENNE (après la première installation)
+-----------------------------------------------------------
+1. Ouvrir une invite de commandes dans le dossier du projet
+2. Lancer :
+   docker-compose up
+3. Ouvrir le navigateur sur :
+   http://localhost:5173
+4. Pour arrêter : appuyer sur Ctrl+C dans le terminal,
+   ou taper dans un nouveau terminal :
+   docker-compose down
+
+
+CHANGER SES CLÉS API OU SON EMAIL PLUS TARD
+-----------------------------------------------
+1. Modifier le fichier .env.docker avec les nouvelles valeurs
+2. Recopier vers .env :
+   copy .env.docker .env
+3. Redémarrer :
+   docker-compose restart backend
+
+
+EN CAS DE PROBLÈME
+---------------------
+- Vérifier que Docker Desktop est bien lancé
+- Vérifier l'état des conteneurs avec :
+  docker ps
+- Consulter les journaux du backend avec :
+  docker-compose logs backend --tail 50

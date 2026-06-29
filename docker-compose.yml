@@ -1,0 +1,56 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: promptbcp_backend
+    volumes:
+      - .:/var/www
+    networks:
+      - promptbcp_network
+    depends_on:
+      - mysql
+
+  webserver:
+    image: nginx:alpine
+    container_name: promptbcp_webserver
+    ports:
+      - "8000:80"
+    volumes:
+      - .:/var/www
+      - ./docker/nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - backend
+    networks:
+      - promptbcp_network
+
+  mysql:
+    image: mysql:8.0
+    container_name: promptbcp_mysql
+    restart: always
+    environment:
+      MYSQL_DATABASE: promptBCP
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - promptbcp_network
+
+  frontend:
+    build:
+      context: ./promptbcp-frontend
+      dockerfile: Dockerfile
+    container_name: promptbcp_frontend
+    ports:
+      - "5173:80"
+    networks:
+      - promptbcp_network
+
+networks:
+  promptbcp_network:
+    driver: bridge
+
+volumes:
+  mysql_data:
