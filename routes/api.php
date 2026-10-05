@@ -8,6 +8,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\AIController;
 use App\Http\Controllers\EmailController;
 use App\Http\Controllers\PDFController;
+use App\Http\Controllers\TechnicalEvaluationController;
 
 
 
@@ -48,3 +49,17 @@ Route::prefix('ai')->group(function () {
 
 Route::post('/executions/{execution}/send-email', [EmailController::class, 'sendAIResponse']);
 Route::post('/executions/{execution}/generate-pdf', [PDFController::class, 'generatePDF']);
+
+
+
+
+
+
+
+
+
+Route::prefix('technical-evaluations')->group(function () {
+    Route::get('/', [TechnicalEvaluationController::class, 'index']);
+    Route::post('/', [TechnicalEvaluationController::class, 'store']);
+    Route::get('/{technicalEvaluation}', [TechnicalEvaluationController::class, 'show']);
+});
